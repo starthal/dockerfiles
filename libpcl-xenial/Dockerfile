@@ -4,7 +4,7 @@ FROM ubuntu:16.04
 RUN apt-get update && apt-get install -y build-essential curl cmake
 
 # PCL depends
-RUN apt-get install -y libboost-all-dev libeigen3-dev libflann-dev libvtk6-dev 
+RUN apt-get install -y libboost-all-dev libeigen3-dev libflann-dev libvtk6-dev libproj-dev
 
 # Optional depends
 #RUN apt-get install -y libqhull-dev libvtk6-qt-dev libopenni-dev
