@@ -1,10 +1,14 @@
 FROM ubuntu:16.04
 
+RUN apt-get update
+
 # Build depends
-RUN apt-get update && apt-get install -y build-essential curl cmake
+RUN apt-get install -y --no-install-recommends \
+    build-essential curl cmake
 
 # PCL depends
-RUN apt-get install -y libboost-all-dev libeigen3-dev libflann-dev libvtk6-dev libproj-dev
+RUN apt-get install -y --no-install-recommends \
+    libboost-all-dev libeigen3-dev libflann-dev libvtk6-dev libproj-dev
 
 # Optional depends
 #RUN apt-get install -y libqhull-dev libvtk6-qt-dev libopenni-dev
@@ -13,4 +17,8 @@ RUN apt-get install -y libboost-all-dev libeigen3-dev libflann-dev libvtk6-dev l
 RUN curl -OL https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.1.tar.gz 
 
 # Build PCL
-RUN tar -xf pcl-1.8.1.tar.gz && cd pcl-pcl-1.8.1 && mkdir build && cd build && cmake .. && make -j4 -l4 && make install
+RUN tar -xf pcl-1.8.1.tar.gz && cd pcl-pcl-1.8.1 && mkdir build
+WORKDIR pcl-1.8.1/build
+RUN cmake .. 
+RUN make -j4 && make install
+RUN make install && ldconfig
