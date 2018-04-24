@@ -14,11 +14,12 @@ RUN apt-get install -y --no-install-recommends \
 #RUN apt-get install -y libqhull-dev libvtk6-qt-dev libopenni-dev
 
 # PCL 1.8.1
-RUN curl -OL https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.1.tar.gz 
+RUN curl -OL --insecure https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.1.tar.gz 
 
 # Build PCL
-RUN tar -xf pcl-1.8.1.tar.gz && cd pcl-pcl-1.8.1 && mkdir build
-WORKDIR pcl-1.8.1/build
-RUN cmake .. 
-RUN make -j4 && make install
-RUN make install && ldconfig
+RUN tar -xf pcl-1.8.1.tar.gz && \
+    cd pcl-pcl-1.8.1 && \
+    mkdir build && cd build && \
+    cmake .. && make -j4 && \
+    make install && ldconfig && \
+    cd ../.. && rm -rf pcl-pcl-1.8.1
